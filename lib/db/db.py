@@ -256,3 +256,5 @@ def logout(identifier):
     conn.commit()
     conn.close()
     return {"body": {"message": "User logged out Successfully"}, "status_code": 200}
+
+create_tables()
