@@ -17,7 +17,7 @@ app.config["SECRET_KEY"] = "vafuiwkxdml"  # Use a secure random value in product
 # Configure CORS
 cors = CORS(app, supports_credentials=True, resources={
     r'/verifyCookie': {
-        'origins': 'https://frontend-rhp6.onrender.com',
+        'origins': 'https://frontend-4h95.onrender.com',
         "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
         "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
         "expose_headers": ["Content-Disposition"]
@@ -27,7 +27,7 @@ cors = CORS(app, supports_credentials=True, resources={
 # Add CORS headers after each request
 @app.after_request
 def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "https://frontend-rhp6.onrender.com"
+    response.headers["Access-Control-Allow-Origin"] = "https://frontend-4h95.onrender.com"
     response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, PUT, DELETE"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
