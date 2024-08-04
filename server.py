@@ -1,3 +1,5 @@
+import os
+import traceback
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from lib.db.db import (
@@ -7,12 +9,22 @@ from lib.db.db import (
     newFile as newFileDoc, saveDocumentContent as saveDoContent, logout as logout_user
 )
 from lib.utils.cryptic import encrypt_to_fixed_length_string, decrypt_from_fixed_length_string
-import traceback
 
+# Initialize Flask app
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "vafuiwkxdml"
-cors = CORS(app, supports_credentials=True, resources={r'/verifyCookie': {'origins': 'https://frontend-rhp6.onrender.com', "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"], "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"], "expose_headers": ["Content-Disposition"]}})
+app.config["SECRET_KEY"] = "vafuiwkxdml"  # Use a secure random value in production
 
+# Configure CORS
+cors = CORS(app, supports_credentials=True, resources={
+    r'/verifyCookie': {
+        'origins': 'https://frontend-rhp6.onrender.com',
+        "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
+        "methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+        "expose_headers": ["Content-Disposition"]
+    }
+})
+
+# Add CORS headers after each request
 @app.after_request
 def add_cors_headers(response):
     response.headers["Access-Control-Allow-Origin"] = "https://frontend-rhp6.onrender.com"
@@ -311,4 +323,6 @@ def logout():
         return response
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Use the PORT environment variable if available, otherwise default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)  # Set debug to False for production
